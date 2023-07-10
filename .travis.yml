@@ -13,3 +13,10 @@ after_success:
   - docker build -t congphi/multi-nginx ./nginx
   - docker build -t congphi/multi-server ./server
   - docker build -t congphi/multi-worker ./worker
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to docker hub
+  - docker push congphi/multi-client
+  - docker push congphi/multi-nginx
+  - docker push congphi/multi-server
+  - docker push congphi/multi-worker
