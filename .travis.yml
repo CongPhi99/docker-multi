@@ -1,0 +1,15 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t congphi-react-test -f ./client/Dockerfile.dev
+
+script:
+  - docker run -e CI=true USERNAME/react-test npm test
+
+after_success:
+  - docker build -t congphi/multi-client ./client
+  - docker build -t congphi/multi-nginx ./nginx
+  - docker build -t congphi/multi-server ./server
+  - docker build -t congphi/multi-worker ./worker
